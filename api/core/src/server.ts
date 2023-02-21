@@ -11,7 +11,7 @@ interface errorResponseI {
 
 const app: Express = express();
 
-app.get("/api/:date?", (req: Request, res: Response) => {
+app.get("/:date?", (req: Request, res: Response) => {
   let date: string = req.params.date;
 
   if (!date) {
