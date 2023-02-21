@@ -2,15 +2,25 @@
 <html>
 
 <head>
-  <meta charset="utf-8" />
+  <meta charset="UTF-8">
+  <link rel="stylesheet" type="text/css" href="./style.css">
   <title>Timestamp Microservice</title>
 </head>
 
 <body>
-  <p>Hello world!</p>
-  <p><a href="/api">api</a></p>
-  <p><a href="/api/users">users</a></p>
-  <p><a href="/api/users/1">user 1</a></p>
+  <div id="main-container">
+    <h1>Timestamp Microservice</h1>
+    <p>This microservice can handle requests to convert a date string into a Unix timestamp and a UTC timestamp. The
+      microservice can be accessed at:</p>
+    <p><code>GET /api/:date?</code> - Converts a date string into a Unix timestamp and a UTC timestamp</p>
+    <p>The date string should be in the format of either a Unix timestamp or a natural language date (e.g. January 1,
+      2022). If no date is provided, the current date and time will be used.</p>
+    <h2>Example Usage</h2>
+    <p><code>GET /api/1643577600</code></p>
+    <p><code>GET /api/January%201,%202022</code></p>
+    <h2>Example Output</h2>
+    <p><code>{ "unix": 1643577600, "utc": "Fri, 31 Jan 2022 00:00:00 GMT" }</code></p>
+  </div>
 </body>
 
 </html>

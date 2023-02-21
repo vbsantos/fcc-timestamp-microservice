@@ -1,38 +1,34 @@
-import express from "express";
+import express, { Express, Request, Response } from "express";
 
-var app = express();
+interface ApiResponse {
+  unix: number;
+  utc: string;
+}
 
-const users = [
-  {
-    id: 1,
-    name: "Lucas",
-  },
-  {
-    id: 2,
-    name: "Eric",
-  },
-  {
-    id: 3,
-    name: "Ana",
-  },
-];
+const app: Express = express();
 
-app.get("/", (req: any, res: any) => {
-  res.send("Hello!");
-});
+app.get("/api/:date?", (req: Request, res: Response) => {
+  const date: string = req.params.date;
 
-app.get("/users", (req: any, res: any) => {
-  res.send(users);
-});
+  const isParseable: boolean = Number.isSafeInteger(Date.parse(date));
 
-app.get("/users/:userId", (req: any, res: any) => {
-  const user = users.filter((user) => user.id == req.params.userId);
-  res.send(user);
+  if (!date || !isParseable) {
+    res.sendStatus(422);
+  }
+
+  const dateUnixFormat: number = Date.parse(date);
+  const dateUTCFormat: string = new Date(dateUnixFormat).toUTCString();
+
+  const response: ApiResponse = {
+    unix: dateUnixFormat,
+    utc: dateUTCFormat,
+  };
+
+  res.status(200).json(response);
 });
 
 if (!module.parent) {
   app.listen(3000);
-  console.log("Express started on port 3000");
 }
 
 export default app;
