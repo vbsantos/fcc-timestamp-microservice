@@ -41,6 +41,10 @@ app.get("/:date?", (req: Request, res: Response) => {
   res.status(200).json(response);
 });
 
+app.use((err: Error, req: Request, res: Response) => {
+  res.status(500).json({ error: "Internal Server Error" });
+});
+
 if (!module.parent) {
   app.listen(3000);
 }
