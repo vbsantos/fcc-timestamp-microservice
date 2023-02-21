@@ -1,25 +1,39 @@
 import express, { Express, Request, Response } from "express";
 
-interface ApiResponse {
+interface ApiResponseI {
   unix: number;
   utc: string;
 }
 
+interface errorResponseI {
+  error: string;
+}
+
 const app: Express = express();
 
-app.get("/:date?", (req: Request, res: Response) => {
-  const date: string = req.params.date;
+app.get("/api/:date?", (req: Request, res: Response) => {
+  let date: string = req.params.date;
 
-  const isParseable: boolean = Number.isSafeInteger(Date.parse(date));
-
-  if (!date || !isParseable) {
-    res.sendStatus(422);
+  if (!date) {
+    date = Date.now().toString();
   }
 
-  const dateUnixFormat: number = Date.parse(date);
+  const isNumber: boolean = !isNaN(+date);
+  if (!isNumber) {
+    const isParseable: boolean = Number.isSafeInteger(Date.parse(date));
+    if (!isParseable) {
+      const error: errorResponseI = {
+        error: "Invalid Date",
+      };
+
+      res.status(422).json(error);
+    }
+  }
+
+  const dateUnixFormat: number = isNumber ? +date : Date.parse(date);
   const dateUTCFormat: string = new Date(dateUnixFormat).toUTCString();
 
-  const response: ApiResponse = {
+  const response: ApiResponseI = {
     unix: dateUnixFormat,
     utc: dateUTCFormat,
   };
