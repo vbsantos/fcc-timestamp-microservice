@@ -7,7 +7,7 @@ interface ApiResponse {
 
 const app: Express = express();
 
-app.get("/api/:date?", (req: Request, res: Response) => {
+app.get("/:date?", (req: Request, res: Response) => {
   const date: string = req.params.date;
 
   const isParseable: boolean = Number.isSafeInteger(Date.parse(date));
