@@ -29,7 +29,24 @@
     </p>
     <h2>Example Output</h2>
     <p><code>{ "unix": 1643577600, "utc": "Fri, 31 Jan 2022 00:00:00 GMT" }</code></p>
+
+    <h2>Try yourself</h2>
+    <p>Enter a date in either Unix timestamp or UTC format and get the converted result.</p>
+
+    <form action="/api/" method="get">
+      <p>
+        <label for="date">Enter a date:</label>
+        <input type="text" name="date" id="date" placeholder="1450137600 or 2015-12-15T00:00:00Z">
+        <button type="submit">Convert</button>
+      </p>
+    </form>
+
+    <p id="result">
+      <!-- Results will be displayed here -->
+    </p>
   </div>
+
+  <script src="script.js"></script>
 </body>
 
 </html>
